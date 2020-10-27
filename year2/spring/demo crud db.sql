@@ -1,5 +1,5 @@
-CREATE DATABASE  IF NOT EXISTS `demo-crud` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `demo-crud`;
+CREATE DATABASE  IF NOT EXISTS `oktyabr20-demo-crud-spring` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `oktyabr20-demo-crud-spring`;
 -- MySQL dump 10.13  Distrib 5.6.13, for Win32 (x86)
 --
 -- Host: localhost    Database: demo-crud
