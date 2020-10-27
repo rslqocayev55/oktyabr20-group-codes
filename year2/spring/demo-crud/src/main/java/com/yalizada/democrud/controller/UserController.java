@@ -1,5 +1,7 @@
 package com.yalizada.democrud.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,23 +22,28 @@ public class UserController {
 
 	@GetMapping("/signup")
 	public String showSignUpForm(Model model) {
+		System.out.println("showSignUpForm");
 		User user=new  User();
-		
+		//user.setName("Yaqub");
 		model.addAttribute("user", user);
 		return "add-user";
 	}
 
 	@GetMapping("/index")
 	public String index() {
+		System.out.println("index");
 		return "index";
 	}
 
 	@GetMapping("/")
-	public String indexPage() {
+	public String indexPage(Model m) {
+		System.out.println("indexPage");
+		m.addAttribute("users",userDAO.findAll());
 		return "index";
 	}
 	@PostMapping("/adduser")
-	public String addUser(User user, BindingResult result, Model model) {
+	public String addUser(@Valid User user, BindingResult result, Model model) {
+		System.out.println("addUser");
 		if (result.hasErrors()) {
 			return "add-user";
 		}
@@ -50,6 +57,7 @@ public class UserController {
 
 	@GetMapping("/edit/{id}")
 	public String showUpdateForm(@PathVariable("id") int id, Model model) {
+		System.out.println("showUpdateForm");
 		User user = userDAO.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
 
 		model.addAttribute("user", user);
@@ -58,6 +66,7 @@ public class UserController {
 
 	@PostMapping("/update/{id}")
 	public String updateUser(@PathVariable("id") int id, User user, BindingResult result, Model model) {
+		System.out.println("updateUser");
 		if (result.hasErrors()) {
 			user.setId(id);
 			return "update-user";
@@ -70,6 +79,7 @@ public class UserController {
 
 	@GetMapping("/delete/{id}")
 	public String deleteUser(@PathVariable("id") int id, Model model) {
+		System.out.println("deleteUser");
 		User user = userDAO.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
 		userDAO.delete(user);
 		model.addAttribute("users", userDAO.findAll());
