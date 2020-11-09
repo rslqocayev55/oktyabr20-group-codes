@@ -3,9 +3,16 @@
 
 <head>
 	<title>Employee Directory</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+	
 </head>
 
-<body><form  th:action="@{/adduser}" th:object="${user}" method="post">
+<body>
+
+<div th:replace="menu :: menu"></div>
+
+
+<form  th:action="@{/adduser}" th:object="${user}" method="post">
     <label for="name">Name</label>
     <input type="text" th:field="*{name}" id="name" placeholder="Name">
     <span style="color:red;" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
