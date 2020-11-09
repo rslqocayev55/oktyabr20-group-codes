@@ -11,16 +11,25 @@
 
 <div th:replace="menu :: menu"></div>
 
+<div class="container">
 
-<form  th:action="@{/adduser}" th:object="${user}" method="post">
-    <label for="name">Name</label>
-    <input type="text" th:field="*{name}" id="name" placeholder="Name">
+<form th:action="@{/adduser}" th:object="${user}" method="post">
+    <div class="form-group">
+      <label for="name">Ad:</label>
+        <input class="form-control" type="text" th:field="*{name}" id="name" placeholder="Name">
     <span style="color:red;" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
-    <label for="email">Email</label>
-    <input type="text" th:field="*{email}" id="email" placeholder="Email">
+    </div>
+    <div class="form-group">
+      <label for="email">Email:</label>
+     <input class="form-control" type="text" th:field="*{email}" id="email" placeholder="Email">
     <span style="color:red;" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
-    <input type="submit" value="Add User">   
-</form>
+    </div>
+     
+    <button type="submit" class="btn btn-primary">Yadda saxla</button>
+  </form>
+</div>
+  
+ 
 
 </body>
 </html>
