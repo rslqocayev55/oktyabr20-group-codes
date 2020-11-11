@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,28 +30,35 @@ public class FileSystemStorageService implements StorageService {
 	}
 
 	@Override
-	public void store(MultipartFile file) {
-		try {
-			if (file.isEmpty()) {
-				throw new StorageException("Failed to store empty file.");
-			}
-			Path destinationFile = this.rootLocation.resolve(
-					Paths.get(file.getOriginalFilename()))
-					.normalize().toAbsolutePath();
-			if (!destinationFile.getParent().equals(this.rootLocation.toAbsolutePath())) {
-				// This is a security check
-				throw new StorageException(
-						"Cannot store file outside current directory.");
-			}
-			try (InputStream inputStream = file.getInputStream()) {
-				Files.copy(inputStream, destinationFile,
-					StandardCopyOption.REPLACE_EXISTING);
-			}
-		}
-		catch (IOException e) {
-			throw new StorageException("Failed to store file.", e);
-		}
-	}
+	public String store(MultipartFile file) {String filename = StringUtils.cleanPath(file.getOriginalFilename());
+    String randomFileName = "";
+    try {
+        if (file.isEmpty()) {
+            throw new StorageException("Failed to store empty file " + filename);
+        }
+        if (filename.contains("..")) {
+            // This is a security check
+            throw new StorageException(
+                    "Cannot store file with relative path outside current directory "
+                            + filename);
+        }
+        try (InputStream inputStream = file.getInputStream()) {
+
+
+            String originalFileName = file.getOriginalFilename();
+            UUID uuid = UUID.randomUUID();
+            randomFileName = originalFileName.replace(originalFileName.substring(0, originalFileName.lastIndexOf(".")), uuid.toString());
+
+
+            Files.copy(inputStream, this.rootLocation.resolve(randomFileName),
+                    StandardCopyOption.REPLACE_EXISTING);
+        }
+    } catch (IOException e) {
+        throw new StorageException("Failed to store file " + filename, e);
+    }
+
+
+    return randomFileName;}
 
 	@Override
 	public Stream<Path> loadAll() {

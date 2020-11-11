@@ -20,6 +20,16 @@ public class User {
 	@Length(min=2, message="Minimum 2, maksimum 20 simvol yazmaq lazimdir", max=20)
 	@Pattern(regexp="[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")
 	private String email;
+	private String imagePath;
+
+	 
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
 
 	public Integer getId() {
 		return id;

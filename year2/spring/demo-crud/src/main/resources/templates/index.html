@@ -28,6 +28,7 @@ $(document).ready( function () {
                     <tr>
                         <th>Name</th>
                         <th>Email</th>
+                        <th>Image</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
@@ -36,6 +37,9 @@ $(document).ready( function () {
                 <tr th:each="user : ${users}">
                     <td th:text="${user.name}"></td>
                     <td th:text="${user.email}"></td>
+                    <td>
+                    <img th:src="${user.imagePath}">
+                    </td>
                     <td><a th:href="@{/edit/{id}(id=${user.id})}">Edit</a></td>
                     <td><a onclick="return confirm('eminsen?');"
                     th:href="@{/delete/{id}(id=${user.id})}">Delete</a></td>

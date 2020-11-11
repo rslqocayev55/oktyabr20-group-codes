@@ -1,55 +1,87 @@
 package com.yalizada.democrud.controller;
 
+import java.util.List;
+
+import javax.servlet.ServletContext;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.yalizada.democrud.dao.UserDAO;
+import com.yalizada.democrud.file.StorageService;
 import com.yalizada.democrud.model.User;
 
 @Controller
 public class UserController {
-
+	@Autowired
+	private StorageService storageService;
 	@Autowired
 	private UserDAO userDAO;
 
 	@GetMapping("/signup")
 	public String showSignUpForm(Model model) {
 		System.out.println("showSignUpForm");
-		User user=new  User();
-		//user.setName("Yaqub");
+		User user = new User();
+		// user.setName("Yaqub");
 		model.addAttribute("user", user);
 		return "add-user";
 	}
 
 	@GetMapping("/index")
-	public String index() {
-		System.out.println("index");
+	public String index(Model m) {
+		System.out.println("indexPage");
+		m.addAttribute("users", addImagePath(userDAO.findAll()));
 		return "index";
 	}
 
 	@GetMapping("/")
 	public String indexPage(Model m) {
 		System.out.println("indexPage");
-		m.addAttribute("users",userDAO.findAll());
+		m.addAttribute("users", addImagePath(userDAO.findAll()));
 		return "index";
 	}
-	@PostMapping("/adduser")
-	public String addUser(@Valid User user, BindingResult result, Model model) {
-		System.out.println("addUser");
-		if (result.hasErrors()) {
-			return "add-user";
-		}
 
+	@Autowired
+	private ServletContext servletContext;
+
+	@RequestMapping(value = "/adduser", method = RequestMethod.POST)
+	public String addUser(@Valid @ModelAttribute("user") User user, BindingResult result, Model model,
+			@RequestParam(value = "image",required=true) MultipartFile image) {
+		for (ObjectError error : result.getAllErrors()) {
+			System.out.println(error.getDefaultMessage());	
+			}
+if(result.hasErrors()){
+	return "add-user";
+	
+}
+
+
+String imageName="fakeimage.png";
+
+System.out.println(image);
+
+if(image==null){
+	
+}else{
+	imageName = storageService.store(image);
+}
+		
+		user.setImagePath(imageName);
 		userDAO.save(user);
-		model.addAttribute("users", userDAO.findAll());
+
+		model.addAttribute("users", addImagePath(userDAO.findAll()));
 		return "index";
 	}
 
@@ -73,7 +105,8 @@ public class UserController {
 		}
 
 		userDAO.save(user);
-		model.addAttribute("users", userDAO.findAll());
+		model.addAttribute("users", addImagePath(userDAO.findAll()));
+
 		return "index";
 	}
 
@@ -82,7 +115,17 @@ public class UserController {
 		System.out.println("deleteUser");
 		User user = userDAO.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
 		userDAO.delete(user);
-		model.addAttribute("users", userDAO.findAll());
+		model.addAttribute("users", addImagePath(userDAO.findAll()));
 		return "index";
 	}
+
+	private List<User> addImagePath(List<User> users) {
+		String contextPath = servletContext.getContextPath();
+		System.out.println("contextPath : " + contextPath);
+		for (User user : users) {
+			user.setImagePath(contextPath + "/files/" + user.getImagePath());
+		}
+		return users;
+	}
+
 }

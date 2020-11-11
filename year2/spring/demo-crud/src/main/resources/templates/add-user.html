@@ -13,7 +13,9 @@
 
 <div class="container">
 
-<form th:action="@{/adduser}" th:object="${user}" method="post">
+<form enctype="multipart/form-data"
+ th:action="@{/adduser}" th:object="${user}" 
+ method="post">
     <div class="form-group">
       <label for="name">Ad:</label>
         <input class="form-control" type="text" th:field="*{name}" id="name" placeholder="Name">
@@ -24,6 +26,16 @@
      <input class="form-control" type="text" th:field="*{email}" id="email" placeholder="Email">
     <span style="color:red;" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
     </div>
+    
+    
+    <div class="form-group">
+      <label for="email">Şəkil:</label>
+     <input required class="form-control" type="file"  name="image" accept="image/x-png,image/jpeg,image/jpg">
+    
+    </div>
+    
+   
+    
      
     <button type="submit" class="btn btn-primary">Yadda saxla</button>
   </form>
