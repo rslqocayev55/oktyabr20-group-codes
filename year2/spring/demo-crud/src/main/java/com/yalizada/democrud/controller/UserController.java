@@ -27,8 +27,13 @@ import com.yalizada.democrud.model.User;
 public class UserController {
 	@Autowired
 	private StorageService storageService;
+	
+	
 	@Autowired
 	private UserDAO userDAO;
+	
+	@Autowired
+	private ServletContext servletContext;
 
 	@GetMapping("/signup")
 	public String showSignUpForm(Model model) {
@@ -39,29 +44,19 @@ public class UserController {
 		return "add-user";
 	}
 
-	@GetMapping("/index")
+	@GetMapping(path={"/index","/"})
 	public String index(Model m) {
 		System.out.println("indexPage");
 		m.addAttribute("users", addImagePath(userDAO.findAll()));
 		return "index";
-	}
-
-	@GetMapping("/")
-	public String indexPage(Model m) {
-		System.out.println("indexPage");
-		m.addAttribute("users", addImagePath(userDAO.findAll()));
-		return "index";
-	}
-
-	@Autowired
-	private ServletContext servletContext;
+	} 
+	
 
 	@RequestMapping(value = "/adduser", method = RequestMethod.POST)
 	public String addUser(@Valid @ModelAttribute("user") User user, BindingResult result, Model model,
 			@RequestParam(value = "image",required=true) MultipartFile image) {
-		for (ObjectError error : result.getAllErrors()) {
-			System.out.println(error.getDefaultMessage());	
-			}
+		
+		 
 if(result.hasErrors()){
 	return "add-user";
 	
@@ -70,9 +65,9 @@ if(result.hasErrors()){
 
 String imageName="fakeimage.png";
 
-System.out.println(image);
+System.out.println(image.getSize());
 
-if(image==null){
+if(image==null || image.getSize()==0L){
 	
 }else{
 	imageName = storageService.store(image);
