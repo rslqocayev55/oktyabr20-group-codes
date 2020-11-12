@@ -39,6 +39,7 @@ public class UserController {
 	public String showSignUpForm(Model model) {
 		System.out.println("showSignUpForm");
 		User user = new User();
+		user.setId(0);
 		// user.setName("Yaqub");
 		model.addAttribute("user", user);
 		return "add-user";
@@ -52,10 +53,11 @@ public class UserController {
 	} 
 	
 
-	@RequestMapping(value = "/adduser", method = RequestMethod.POST)
+	@RequestMapping(value = "/adduser/{id}", method = RequestMethod.POST)
 	public String addUser(@Valid @ModelAttribute("user") User user, BindingResult result, Model model,
-			@RequestParam(value = "image",required=true) MultipartFile image) {
-		
+			@RequestParam(value = "image",required=true) MultipartFile image,@PathVariable("id") Integer id) {
+		user.setId(id);
+		System.out.println("user - "+user);
 		 
 if(result.hasErrors()){
 	return "add-user";
@@ -88,22 +90,9 @@ if(image==null || image.getSize()==0L){
 		User user = userDAO.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
 
 		model.addAttribute("user", user);
-		return "update-user";
+		return "add-user";
 	}
-
-	@PostMapping("/update/{id}")
-	public String updateUser(@PathVariable("id") int id, User user, BindingResult result, Model model) {
-		System.out.println("updateUser");
-		if (result.hasErrors()) {
-			user.setId(id);
-			return "update-user";
-		}
-
-		userDAO.save(user);
-		model.addAttribute("users", addImagePath(userDAO.findAll()));
-
-		return "index";
-	}
+ 
 
 	@GetMapping("/delete/{id}")
 	public String deleteUser(@PathVariable("id") int id, Model model) {

@@ -14,8 +14,9 @@
 <div class="container">
 
 <form enctype="multipart/form-data"
- th:action="@{/adduser}" th:object="${user}" 
+ th:action="@{/adduser/{id}(id=${user.id})}" th:object="${user}" 
  method="post">
+  
     <div class="form-group">
       <label for="name">Ad:</label>
         <input class="form-control" type="text" th:field="*{name}" id="name" placeholder="Name">
@@ -30,7 +31,7 @@
     
     <div class="form-group">
       <label for="email">Şəkil:</label>
-     <input required class="form-control" type="file"  name="image" accept="image/x-png,image/jpeg,image/jpg">
+     <input   class="form-control" type="file"  name="image" accept="image/x-png,image/jpeg,image/jpg">
     
     </div>
     

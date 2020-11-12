@@ -26,23 +26,29 @@ $(document).ready( function () {
             <table id="myUsersTable" class="table">
                 <thead>
                     <tr>
-                        <th>Name</th>
+                    <th>Id</th>
+                        <th>Ad</th>
                         <th>Email</th>
-                        <th>Image</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
+                        <th>Profil şəkili</th>
+                        <th>Əməliyyatlar</th>
+                       
                     </tr>
                 </thead>
                 <tbody>
                 <tr th:each="user : ${users}">
+                 <td th:text="${user.id}"></td>
                     <td th:text="${user.name}"></td>
                     <td th:text="${user.email}"></td>
                     <td>
-                    <img th:src="${user.imagePath}">
+                    <img style="max-width: 40px;" th:src="${user.imagePath}">
                     </td>
-                    <td><a th:href="@{/edit/{id}(id=${user.id})}">Edit</a></td>
-                    <td><a onclick="return confirm('eminsen?');"
-                    th:href="@{/delete/{id}(id=${user.id})}">Delete</a></td>
+                    <td><a class="btn btn-primary" th:href="@{/edit/{id}(id=${user.id})}">Redaktə</a>
+                    
+                    <a class="btn btn-danger" onclick="return confirm('eminsen?');"
+                    th:href="@{/delete/{id}(id=${user.id})}">Sil</a>
+                    
+                    </td>
+                    
                 </tr>
             </tbody>
         </table>
