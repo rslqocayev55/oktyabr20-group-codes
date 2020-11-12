@@ -56,7 +56,13 @@ public class UserController {
 	@RequestMapping(value = "/adduser/{id}", method = RequestMethod.POST)
 	public String addUser(@Valid @ModelAttribute("user") User user, BindingResult result, Model model,
 			@RequestParam(value = "image",required=true) MultipartFile image,@PathVariable("id") Integer id) {
-		user.setId(id);
+		user.setId(id); //15
+		if(id>0){
+				user=userDAO.findById(id).get();
+		}
+	
+		
+		
 		System.out.println("user - "+user);
 		 
 if(result.hasErrors()){
@@ -74,8 +80,12 @@ if(image==null || image.getSize()==0L){
 }else{
 	imageName = storageService.store(image);
 }
+		if(id==0){
+			user.setImagePath(imageName);
+		}else if(!imageName.equals("fakeimage.png")){
+			user.setImagePath(imageName);
+		} 
 		
-		user.setImagePath(imageName);
 		userDAO.save(user);
 
 		model.addAttribute("users", addImagePath(userDAO.findAll()));
