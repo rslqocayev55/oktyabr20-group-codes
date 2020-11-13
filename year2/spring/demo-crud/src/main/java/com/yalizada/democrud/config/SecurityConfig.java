@@ -19,7 +19,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         http.csrf().disable()
                 .authorizeRequests()
                
-            
+                .antMatchers(HttpMethod.GET,"/createUserShowForm").permitAll()
                 .antMatchers(HttpMethod.GET,"/").hasAnyRole("DELETOR","ADMIN","EDITOR","CREATOR")
                 .antMatchers(HttpMethod.GET,"/delete").hasAnyRole("DELETOR","ADMIN")
                 .antMatchers(HttpMethod.GET,"/edit/**").hasAnyRole("EDITOR","ADMIN")
@@ -29,13 +29,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 
                 .anyRequest().authenticated()
                 .and()
-                .formLogin()
+                .formLogin().loginPage("/showMyLoginPage")
              
-                .permitAll()
+                .loginProcessingUrl("/authenticateTheUser").permitAll()
                 .and()
                 .logout()
                 .permitAll()
                  ;
+        
+        
+       
+		;
     }
 	
 

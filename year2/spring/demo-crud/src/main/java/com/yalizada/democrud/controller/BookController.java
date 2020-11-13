@@ -40,6 +40,21 @@ public class BookController {
 	@Autowired
 	private ServletContext servletContext;
 
+	
+	
+	@GetMapping("/showMyLoginPage")
+	public String showMyLoginPage( ) {
+	 
+		return "my-login";
+	}
+	
+	
+	
+	@GetMapping("/createUserShowForm")
+	public String createUserShowForm( ) {
+	 
+		return "create-user-form";
+	}
 	@GetMapping("/signup")
 	public String showSignUpForm(Model model) {
 		System.out.println("showSignUpForm");
