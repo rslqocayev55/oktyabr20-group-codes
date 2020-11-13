@@ -3,22 +3,24 @@ package com.yalizada.democrud.controller;
 import java.util.List;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.yalizada.democrud.config.MySession;
 import com.yalizada.democrud.dao.UserDAO;
 import com.yalizada.democrud.file.StorageService;
 import com.yalizada.democrud.model.User;
@@ -31,6 +33,8 @@ public class UserController {
 	
 	@Autowired
 	private UserDAO userDAO;
+	@Autowired
+	private MySession mySession;
 	
 	@Autowired
 	private ServletContext servletContext;
@@ -46,9 +50,19 @@ public class UserController {
 	}
 
 	@GetMapping(path={"/index","/"})
-	public String index(Model m) {
+	public String index(Model m ) {
 		System.out.println("indexPage");
 		m.addAttribute("users", addImagePath(userDAO.findAll()));
+		
+		 
+		
+		
+		
+		 Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+		    String username = loggedInUser.getName();
+		    mySession.setMessage("Hello session");
+		    mySession.setUsername(username);
+		    
 		return "index";
 	} 
 	
@@ -58,7 +72,7 @@ public class UserController {
 			@RequestParam(value = "image",required=true) MultipartFile image,@PathVariable("id") Integer id) {
 		user.setId(id); //15
 		if(id>0){
-				user=userDAO.findById(id).get();
+				user.setImagePath(userDAO.findById(id).get().getImagePath());
 		}
 	
 		
@@ -77,7 +91,7 @@ System.out.println(image.getSize());
 
 if(image==null || image.getSize()==0L){
 	
-}else{
+}else{ 
 	imageName = storageService.store(image);
 }
 		if(id==0){

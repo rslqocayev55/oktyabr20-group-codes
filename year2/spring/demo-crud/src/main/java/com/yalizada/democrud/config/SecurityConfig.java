@@ -21,7 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                
             
                 .antMatchers(HttpMethod.GET,"/").hasAnyRole("DELETOR","ADMIN","EDITOR","CREATOR")
-                .antMatchers(HttpMethod.GET,"/delete/**").hasAnyRole("DELETOR","ADMIN")
+                .antMatchers(HttpMethod.GET,"/delete").hasAnyRole("DELETOR","ADMIN")
                 .antMatchers(HttpMethod.GET,"/edit/**").hasAnyRole("EDITOR","ADMIN")
                 .antMatchers(HttpMethod.POST,"/adduser").hasAnyRole("CREATOR","ADMIN")
                 .antMatchers(HttpMethod.GET,"/signup").hasAnyRole("CREATOR","ADMIN")
