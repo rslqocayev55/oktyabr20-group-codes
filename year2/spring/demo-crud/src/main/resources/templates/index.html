@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>Employee Directory</title>
+	<title>Kitablar</title>
 	 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 	
 	
@@ -22,15 +22,16 @@ $(document).ready( function () {
 <div  >
     
         <div  >
-            <h2>Users</h2>
+            <h2>Kitablar</h2>
             İstifadəçi adı : <p style="color: red;font-size: 24px;" th:text="${@mySession.getUsername()}"></p>
+             <p><a href="/signup">Yeni kitab qeydiyyatı</a></p>
             <table id="myUsersTable" class="table">
                 <thead>
                     <tr>
                     <th>Id</th>
                         <th>Ad</th>
-                        <th>Email</th>
-                        <th>Profil şəkili</th>
+                        <th>Qiymət</th>
+                        <th>Şəkili</th>
                         <th>Əməliyyatlar</th>
                        
                     </tr>
@@ -39,7 +40,7 @@ $(document).ready( function () {
                 <tr th:each="user : ${users}">
                  <td th:text="${user.id}"></td>
                     <td th:text="${user.name}"></td>
-                    <td th:text="${user.email}"></td>
+                    <td th:text="${user.price}"></td>
                     <td>
                     <img style="max-width: 40px;" th:src="${user.imagePath}">
                     </td>
@@ -54,7 +55,7 @@ $(document).ready( function () {
             </tbody>
         </table>
     </div>      
-    <p><a href="/signup">Add a new user</a></p>
+   
     <form th:action="@{/logout}" method="post">
             <input type="submit" value="Sign Out"/>
         </form>
