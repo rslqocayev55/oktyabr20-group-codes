@@ -21,19 +21,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.yalizada.democrud.config.MySession;
-import com.yalizada.democrud.dao.UserDAO;
+import com.yalizada.democrud.dao.BookDAO;
 import com.yalizada.democrud.file.StorageService;
-import com.yalizada.democrud.model.User;
+import com.yalizada.democrud.model.Book;
 
 @Controller
-public class UserController {
+public class BookController {
 	@Autowired
 	private StorageService storageService;
 	private String username;
 	
 	
 	@Autowired
-	private UserDAO userDAO;
+	private BookDAO userDAO;
 	@Autowired
 	private MySession mySession;
 	
@@ -43,7 +43,7 @@ public class UserController {
 	@GetMapping("/signup")
 	public String showSignUpForm(Model model) {
 		System.out.println("showSignUpForm");
-		User user = new User();
+		Book user = new Book();
 		user.setId(0);
 		// user.setName("Yaqub");
 		model.addAttribute("user", user);
@@ -70,7 +70,7 @@ public class UserController {
 	
 
 	@RequestMapping(value = "/adduser/{id}", method = RequestMethod.POST)
-	public String addUser(@Valid @ModelAttribute("user") User user, BindingResult result, Model model,
+	public String addUser(@Valid @ModelAttribute("user") Book user, BindingResult result, Model model,
 			@RequestParam(value = "image",required=true) MultipartFile image,@PathVariable("id") Integer id) {
 		user.setId(id); //15
 		if(id>0){
@@ -113,7 +113,7 @@ if(image==null || image.getSize()==0L){
 	@GetMapping("/edit/{id}")
 	public String showUpdateForm(@PathVariable("id") int id, Model model) {
 		System.out.println("showUpdateForm");
-		User user = userDAO.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+		Book user = userDAO.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
 
 		model.addAttribute("user", user);
 		return "add-user";
@@ -123,16 +123,16 @@ if(image==null || image.getSize()==0L){
 	@GetMapping("/delete/{id}")
 	public String deleteUser(@PathVariable("id") int id, Model model) {
 		System.out.println("deleteUser");
-		User user = userDAO.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+		Book user = userDAO.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
 		userDAO.delete(user);
 		model.addAttribute("users", addImagePath(userDAO.findAllByUsername(this.username)));
 		return "index";
 	}
 
-	private List<User> addImagePath(List<User> users) {
+	private List<Book> addImagePath(List<Book> users) {
 		String contextPath = servletContext.getContextPath();
 		System.out.println("contextPath : " + contextPath);
-		for (User user : users) {
+		for (Book user : users) {
 			user.setImagePath(contextPath + "/files/" + user.getImagePath());
 		}
 		return users;
