@@ -21,8 +21,17 @@ public class User {
 	@Pattern(regexp="[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")
 	private String email;
 	private String imagePath;
+private String username;
 
 	 
+	public String getUsername() {
+	return username;
+}
+
+public void setUsername(String username) {
+	this.username = username;
+}
+
 	public String getImagePath() {
 		return imagePath;
 	}

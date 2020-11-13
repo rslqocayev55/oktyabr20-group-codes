@@ -29,6 +29,7 @@ import com.yalizada.democrud.model.User;
 public class UserController {
 	@Autowired
 	private StorageService storageService;
+	private String username;
 	
 	
 	@Autowired
@@ -52,7 +53,7 @@ public class UserController {
 	@GetMapping(path={"/index","/"})
 	public String index(Model m ) {
 		System.out.println("indexPage");
-		m.addAttribute("users", addImagePath(userDAO.findAll()));
+		
 		
 		 
 		
@@ -62,7 +63,8 @@ public class UserController {
 		    String username = loggedInUser.getName();
 		    mySession.setMessage("Hello session");
 		    mySession.setUsername(username);
-		    
+		    this.username=username;
+		    m.addAttribute("users", addImagePath(userDAO.findAllByUsername(this.username)));
 		return "index";
 	} 
 	
@@ -99,10 +101,10 @@ if(image==null || image.getSize()==0L){
 		}else if(!imageName.equals("fakeimage.png")){
 			user.setImagePath(imageName);
 		} 
-		
+		user.setUsername(username);
 		userDAO.save(user);
 
-		model.addAttribute("users", addImagePath(userDAO.findAll()));
+		model.addAttribute("users", addImagePath(userDAO.findAllByUsername(this.username)));
 		return "index";
 	}
 
@@ -123,7 +125,7 @@ if(image==null || image.getSize()==0L){
 		System.out.println("deleteUser");
 		User user = userDAO.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
 		userDAO.delete(user);
-		model.addAttribute("users", addImagePath(userDAO.findAll()));
+		model.addAttribute("users", addImagePath(userDAO.findAllByUsername(this.username)));
 		return "index";
 	}
 
