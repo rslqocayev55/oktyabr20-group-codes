@@ -24,6 +24,7 @@ import com.yalizada.democrud.config.MySession;
 import com.yalizada.democrud.dao.BookDAO;
 import com.yalizada.democrud.file.StorageService;
 import com.yalizada.democrud.model.Book;
+import com.yalizada.democrud.model.User;
 
 @Controller
 public class BookController {
@@ -51,8 +52,10 @@ public class BookController {
 	
 	
 	@GetMapping("/createUserShowForm")
-	public String createUserShowForm( ) {
-	 
+	public String createUserShowForm( Model model) {
+		User user=new User();
+		
+	 model.addAttribute("user", user);
 		return "create-user-form";
 	}
 	@GetMapping("/signup")
@@ -83,7 +86,19 @@ public class BookController {
 		return "index";
 	} 
 	
-
+	
+	
+	
+	@RequestMapping(value = "/createUserProcess", method = RequestMethod.POST)
+	public String createUserProcess(  @ModelAttribute("user") User user,   Model model 
+			 ) {
+	  System.out.println(user);
+		 
+		return "my-login";
+	}
+	
+	
+	
 	@RequestMapping(value = "/adduser/{id}", method = RequestMethod.POST)
 	public String addUser(@Valid @ModelAttribute("user") Book user, BindingResult result, Model model,
 			@RequestParam(value = "image",required=true) MultipartFile image,@PathVariable("id") Integer id) {
