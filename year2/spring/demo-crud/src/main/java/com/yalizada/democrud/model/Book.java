@@ -15,7 +15,7 @@ public class Book {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Length(min=2, message="Minimum 2, maksimum 20 simvol yazmaq lazimdir", max=20)
+	@Length(min=2, message="Minimum 2, maksimum 20 simvol yazmaq lazimdir", max=200)
 	private String name;
 	 
 	 

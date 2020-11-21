@@ -89,13 +89,7 @@ public class BookController {
 	
 	
 	
-	@RequestMapping(value = "/createUserProcess", method = RequestMethod.POST)
-	public String createUserProcess(  @ModelAttribute("user") User user,   Model model 
-			 ) {
-	  System.out.println(user);
-		 
-		return "my-login";
-	}
+	
 	
 	
 	
