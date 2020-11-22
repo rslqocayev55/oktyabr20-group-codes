@@ -1,11 +1,14 @@
- 
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Yeni hesab</title>
- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-	
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+	crossorigin="anonymous">
+
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -18,11 +21,11 @@
 
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
- 
+
 </head>
 <body>
-<div th:replace="menu :: menu"></div>
- <div>
+	<div th:replace="menu :: menu"></div>
+	<div>
 
 		<div id="loginbox" style="margin-top: 50px;"
 			class="mainbox col-md-3 col-md-offset-2 col-sm-6 col-sm-offset-2">
@@ -36,23 +39,19 @@
 				<div style="padding-top: 30px" class="panel-body">
 
 					<!-- Login Form -->
-					<form
-						th:action="@{/createUserProcess}"
-						method="POST" class="form-horizontal"
-						
-						th:object="${user}"
-						>
+					<form th:action="@{/createUserProcess}" method="POST"
+						class="form-horizontal" th:object="${user}">
 
 						<!-- Place for messages: error, alert etc ... -->
 						<div class="form-group">
 							<div class="col-xs-15">
-								
+
 								<div th:if="${userAlreadyExists}">
-<div class="alert alert-danger alert-dismissible">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-      Bu istifadəçi adı artıq qeydiyyat edilib.
-  </div>
-  </div>
+									<div class="alert alert-danger alert-dismissible">
+										<button type="button" class="close" data-dismiss="alert">&times;</button>
+										Bu istifadəçi adı artıq qeydiyyat edilib.
+									</div>
+								</div>
 							</div>
 						</div>
 
@@ -60,21 +59,24 @@
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><i
 								class="glyphicon glyphicon-user"></i></span> <input type="text"
-								name="username" th:field="*{username}" placeholder="username" class="form-control">
+								name="username" th:field="*{username}" placeholder="username"
+								class="form-control">
 						</div>
 
 						<!-- Password -->
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><i
 								class="glyphicon glyphicon-lock"></i></span> <input type="password"
-								name="password" th:field="*{password}"  placeholder="password" class="form-control">
+								name="password" th:field="*{password}" placeholder="password"
+								class="form-control">
 						</div>
 
 						<!-- Login/Submit Button -->
 						<div style="margin-top: 10px" class="form-group">
 							<div class="col-sm-12 controls">
-								<button type="submit" class="btn btn-success">Qeydiyyat ol</button>
-								 
+								<button type="submit" class="btn btn-success">Qeydiyyat
+									ol</button>
+
 							</div>
 						</div>
 
