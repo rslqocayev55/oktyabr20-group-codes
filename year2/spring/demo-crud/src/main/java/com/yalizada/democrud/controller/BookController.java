@@ -34,7 +34,7 @@ public class BookController {
 	
 	
 	@Autowired
-	private BookDAO userDAO;
+	private BookDAO bookDAO;
 	@Autowired
 	private MySession mySession;
 	
@@ -73,7 +73,8 @@ public class BookController {
 		System.out.println("indexPage");
 		
 		
-		 
+		 int begin=100;
+		 int length=200;
 		
 		
 		
@@ -82,7 +83,7 @@ public class BookController {
 		    mySession.setMessage("Hello session");
 		    mySession.setUsername(username);
 		    this.username=username;
-		    m.addAttribute("users", addImagePath(userDAO.findAllByUsername(this.username)));
+		    m.addAttribute("users", addImagePath(bookDAO.findAllByUsernamePartial(this.username,begin,length)));
 		return "index";
 	} 
 	
@@ -98,7 +99,7 @@ public class BookController {
 			@RequestParam(value = "image",required=true) MultipartFile image,@PathVariable("id") Integer id) {
 		user.setId(id); //15
 		if(id>0){
-				user.setImagePath(userDAO.findById(id).get().getImagePath());
+				user.setImagePath(bookDAO.findById(id).get().getImagePath());
 		}
 	
 		
@@ -126,9 +127,9 @@ if(image==null || image.getSize()==0L){
 			user.setImagePath(imageName);
 		} 
 		user.setUsername(username);
-		userDAO.save(user);
+		bookDAO.save(user);
 
-		model.addAttribute("users", addImagePath(userDAO.findAllByUsername(this.username)));
+		model.addAttribute("users", addImagePath(bookDAO.findAllByUsername(this.username)));
 		return "index";
 	}
 
@@ -137,7 +138,7 @@ if(image==null || image.getSize()==0L){
 	@GetMapping("/edit/{id}")
 	public String showUpdateForm(@PathVariable("id") int id, Model model) {
 		System.out.println("showUpdateForm");
-		Book user = userDAO.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+		Book user = bookDAO.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
 
 		model.addAttribute("user", user);
 		return "add-user";
@@ -147,9 +148,9 @@ if(image==null || image.getSize()==0L){
 	@GetMapping("/delete/{id}")
 	public String deleteUser(@PathVariable("id") int id, Model model) {
 		System.out.println("deleteUser");
-		Book user = userDAO.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-		userDAO.delete(user);
-		model.addAttribute("users", addImagePath(userDAO.findAllByUsername(this.username)));
+		Book user = bookDAO.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+		bookDAO.delete(user);
+		model.addAttribute("users", addImagePath(bookDAO.findAllByUsername(this.username)));
 		return "index";
 	}
 
