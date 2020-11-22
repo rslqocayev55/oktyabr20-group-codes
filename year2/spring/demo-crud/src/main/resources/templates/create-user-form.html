@@ -46,8 +46,13 @@
 						<!-- Place for messages: error, alert etc ... -->
 						<div class="form-group">
 							<div class="col-xs-15">
-								<div> 
-								</div>
+								
+								<div th:if="${userAlreadyExists}">
+<div class="alert alert-danger alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+      Bu istifadəçi adı artıq qeydiyyat edilib.
+  </div>
+  </div>
 							</div>
 						</div>
 

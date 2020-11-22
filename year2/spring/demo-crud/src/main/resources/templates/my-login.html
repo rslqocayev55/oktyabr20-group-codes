@@ -1,14 +1,17 @@
- 
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Custom login Page</title>
- 
+
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-	
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+	crossorigin="anonymous">
+
 <!-- Reference Bootstrap files -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -18,10 +21,11 @@
 
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
- 
+
 </head>
-<body><div th:replace="menu :: menu"></div>
- <div>
+<body>
+	<div th:replace="menu :: menu"></div>
+	<div>
 
 		<div id="loginbox" style="margin-top: 50px;"
 			class="mainbox col-md-3 col-md-offset-2 col-sm-6 col-sm-offset-2">
@@ -35,9 +39,8 @@
 				<div style="padding-top: 30px" class="panel-body">
 
 					<!-- Login Form -->
-					<form
-						th:action="@{/authenticateTheUser}"
-						method="POST" class="form-horizontal">
+					<form th:action="@{/authenticateTheUser}" method="POST"
+						class="form-horizontal">
 
 						<!-- Place for messages: error, alert etc ... -->
 						<div class="form-group">
@@ -46,7 +49,48 @@
 
 
 
-								
+
+
+									<div th:if="${userCreatedSuccessfully}">
+
+
+
+										<div class="alert alert-success alert-dismissible">
+											<button type="button" class="close" data-dismiss="alert">&times;</button>
+											istifadəçi adı uğurla qeydiyyat edildi.
+										</div>
+
+
+
+									</div>
+
+
+									<div th:if="${param.error}">
+
+
+
+										<div class="alert alert-danger alert-dismissible">
+											<button type="button" class="close" data-dismiss="alert">&times;</button>
+											Yalnış istifadəçi adı və şifrə.
+										</div>
+
+
+
+									</div>
+									
+									<div th:if="${param.logout}">
+										            
+										 
+								    
+								    
+								    <div class="alert alert-success alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+      Hesabınızdan uğurla çıxdınız.
+  </div>
+  
+  
+									</div>
+									
 
 
 
@@ -79,7 +123,8 @@
 						<div style="margin-top: 10px" class="form-group">
 							<div class="col-sm-12 controls">
 								<button type="submit" class="btn btn-success">Giriş</button>
-								<a href="/createUserShowForm"   class="btn btn-primary">Hesab yarat</a>
+								<a href="/createUserShowForm" class="btn btn-primary">Hesab
+									yarat</a>
 							</div>
 						</div>
 

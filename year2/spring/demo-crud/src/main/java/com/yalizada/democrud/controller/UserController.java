@@ -23,8 +23,17 @@ public class UserController {
 	public String createUserProcess(  @ModelAttribute("user") User user,   Model model 
 			 ) {
 	  System.out.println(user);
-	  userDAO.createUser(user);
+	  String viewName="";
+	  
+	  boolean result=  userDAO.createUser(user);
+	if(result){
+		model.addAttribute("userCreatedSuccessfully", "");
+		viewName="my-login";
+	}else{
+		model.addAttribute("userAlreadyExists", "");
+		viewName="create-user-form";
+	}
 		 
-		return "my-login";
+		return viewName;
 	}
 }
