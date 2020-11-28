@@ -1,9 +1,9 @@
 package com.yalizada.democrud.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,19 +70,22 @@ public class BookController {
 
 	@GetMapping(path={"/index","/"})
 	public String index(Model m ) {
-		System.out.println("indexPage");
-		
-		
+		System.out.println("indexPage"); 
 		 int begin=100;
-		 int length=200;
-		
-		
-		
+		 int length=200; 
 		 Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
 		    String username = loggedInUser.getName();
 		    mySession.setMessage("Hello session");
 		    mySession.setUsername(username);
 		    this.username=username;
+		    int totalBookCount=bookDAO.findAllByUsername(username).size();
+		    m.addAttribute("totalBookCount",totalBookCount);
+		    totalBookCount/=length;
+		    List<Integer> links=new ArrayList<Integer>();
+		    for (int i = 1; i <=totalBookCount; i++) {
+		    	links.add(i);
+			}
+		    m.addAttribute("links",links);
 		    m.addAttribute("users", addImagePath(bookDAO.findAllByUsernamePartial(this.username,begin,length)));
 		return "index";
 	} 
@@ -144,6 +147,33 @@ if(image==null || image.getSize()==0L){
 		return "add-user";
 	}
  
+	
+	
+	
+	@GetMapping("/book-pagination/{link}")
+	public String bookPagination(@PathVariable("link") int link, Model model) {
+		System.out.println("showUpdateForm");
+		int length=100;
+		int begin=(link-1)*length;
+		
+		
+		
+		 int totalBookCount=bookDAO.findAllByUsername(username).size();
+		    model.addAttribute("totalBookCount",totalBookCount);
+		    totalBookCount/=length;
+		    
+		    List<Integer> links=new ArrayList<Integer>();
+		    for (int i = 1; i <=totalBookCount; i++) {
+		    	links.add(i);
+			}
+		    model.addAttribute("links",links);
+		    model.addAttribute("users", addImagePath(bookDAO.findAllByUsernamePartial(this.username,begin,length)));
+		     
+		return "index";
+	}
+ 
+	
+	
 
 	@GetMapping("/delete/{id}")
 	public String deleteUser(@PathVariable("id") int id, Model model) {

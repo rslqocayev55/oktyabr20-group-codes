@@ -64,6 +64,17 @@
 			</table>
 		</div>
 
+<span th:each="link : ${links}">
+<a class="btn btn-primary" style="margin: 3px;" th:href="@{/book-pagination/{link}(link=${link})}" >
+<span th:text="${link}"></span>
+
+</a>
+
+</span>
+
+
+
+
 		<form th:action="@{/logout}" method="post">
 			<input type="submit" value="Sign Out" />
 		</form>
