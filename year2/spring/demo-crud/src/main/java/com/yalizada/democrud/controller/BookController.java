@@ -79,8 +79,9 @@ public class BookController {
 		    mySession.setUsername(username);
 		    this.username=username;
 		    int totalBookCount=bookDAO.findAllByUsername(username).size();
-		    m.addAttribute("totalBookCount",totalBookCount);
+		    
 		    totalBookCount/=length;
+		    m.addAttribute("totalBookCount",totalBookCount);
 		    List<Integer> links=new ArrayList<Integer>();
 		    for (int i = 1; i <=totalBookCount; i++) {
 		    	links.add(i);
@@ -159,9 +160,9 @@ if(image==null || image.getSize()==0L){
 		
 		
 		 int totalBookCount=bookDAO.findAllByUsername(username).size();
-		    model.addAttribute("totalBookCount",totalBookCount);
-		    totalBookCount/=length;
 		    
+		    totalBookCount/=length;
+		    model.addAttribute("totalBookCount",totalBookCount);
 		    List<Integer> links=new ArrayList<Integer>();
 		    for (int i = 1; i <=totalBookCount; i++) {
 		    	links.add(i);
