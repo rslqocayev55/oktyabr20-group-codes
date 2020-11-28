@@ -194,4 +194,22 @@ if(image==null || image.getSize()==0L){
 		return users;
 	}
 
+	
+	
+	
+	
+	
+
+	
+	@RequestMapping(value = "/book-search", method = RequestMethod.POST)
+	public String search(  Model model,
+			@RequestParam(value = "searchText",required=true) String searchText 
+			 ) {
+		 
+System.out.println(searchText);
+		model.addAttribute("users", addImagePath(bookDAO.findAllByUsernamePartialSearch(username, 0, 10, searchText)));
+		return "index";
+	}
+	
+	
 }

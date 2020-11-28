@@ -96,6 +96,12 @@ h1{
 			<p>
 				<a href="/signup">Yeni kitab qeydiyyatı</a>
 			</p>
+			
+			<form th:action="@{/book-search}" method="post">
+			<input type="text" placeholder="Buradan axtarmaq istədiyinizi yazın" name="searchText" />
+			<input type="submit" value="Axtar" />
+		</form>
+		
 			<table id="myUsersTable" class="table">
 				<thead>
 					<tr>
