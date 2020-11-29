@@ -20,6 +20,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .authorizeRequests()
                
                 .antMatchers(HttpMethod.GET,"/createUserShowForm").permitAll()
+                .antMatchers(HttpMethod.GET,"/customer").permitAll()
                 .antMatchers(HttpMethod.POST,"/createUserProcess").permitAll()
                 .antMatchers(HttpMethod.GET,"/").hasAnyRole("DELETOR","ADMIN","EDITOR","CREATOR")
                 .antMatchers(HttpMethod.GET,"/delete").hasAnyRole("DELETOR","ADMIN")
