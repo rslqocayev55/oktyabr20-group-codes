@@ -27,12 +27,46 @@
 	flex-direction: row;
 	flex-wrap: wrap;
 }
+.book-card-container {
+    width:100%;
+    float: left;
+    padding: 10px;
+    
+  }
+  @media only screen and (min-width: 400px) {
+  .book-card-container {
+    width:50%;
+  }
+}
+@media only screen and (min-width: 600px) {
+  .book-card-container {
+    width:33.33%;
+  }
+}@media only screen and (min-width: 800px) {
+  .book-card-container {
+    width:25%;
+  }
+}@media only screen and (min-width: 1000px) {
+  .book-card-container {
+    width:20%;
+  }
+}
+@media only screen and (min-width: 1200px) {
+  .book-card-container {
+    width:16.66%;
+  }
+}
+
+
+
+
+
 
 .book-card {
-	width: 200px;
+	 
 	height: auto;
 	border: 2px solid black;
-	margin: 5px;
+	 
 	padding: 10px;
 	border-radius: 15px;
 	display: flex;
@@ -91,8 +125,11 @@
 
 <body>
 	<div th:replace="menu :: menu"></div>
+	
+	
 	<div id="books">
-		<div class="book-card" th:each="book : ${books}">
+		<div class="book-card-container" th:each="book : ${books}">
+		<div class="book-card">
 			<div class="book-image-container"
 				style="width: 90%; margin: auto; height: 150px; margin-top: 20px; padding: 10px;">
 				<img style="max-width: 90%; max-height: 90%;" class="book-image"
@@ -103,7 +140,14 @@
 				th:text="${book.name}" class="book-desc"> </span> <span
 				th:text="${book.price}" class="book-price"> </span>
 			<button class="add-to-basket">Səbətə at</button>
+			</div>
 		</div>
+		
+		
 	</div>
+	
+	
+	
+	
 </body>
 </html>
