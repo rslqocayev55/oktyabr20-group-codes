@@ -26,6 +26,9 @@ public List<Book> findAllByUsernamePartialSearch(String username,Integer begin,I
 public List<Book> findAllPartial(Integer begin,Integer length);
 
 
+@Query(value="select * from book where concat(name,id) like %?3% limit ?1,?2",nativeQuery=true)
+public List<Book> findAllPartialSearch(Integer begin,Integer length,String search);
+
 
 // findAllByUsernamePartial("admin",100,200);
 

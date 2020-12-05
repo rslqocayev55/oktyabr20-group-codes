@@ -71,8 +71,8 @@ public class BookController {
 	@GetMapping(path={"/index","/"})
 	public String index(Model m ) {
 		System.out.println("indexPage"); 
-		 int begin=100;
-		 int length=200; 
+		 int begin=0;
+		 int length=100; 
 		 Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
 		    String username = loggedInUser.getName();
 		    mySession.setMessage("Hello session");

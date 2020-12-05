@@ -121,11 +121,41 @@
 	
 }
 </style>
+
+<script>
+	$(document).ready(function() {
+	 
+		var totalBookCount = [[${totalBookCount}]];
+		
+		$('#pagination-demo').twbsPagination({
+	        totalPages: totalBookCount,
+	        visiblePages: 20,
+	        
+	        next: 'Next',
+	        prev: 'Prev',
+	        onPageClick: function (event, page) {
+	            //fetch content and render here
+	            $('#page-content').html('<a href="/customer/pagination/'+page+'"> '+page+' </a>') + '';
+	        }
+	    });
+		
+	});
+	
+	
+	
+	
+</script>
+
+
 </head>
 
 <body>
 	<div th:replace="menu :: menu"></div>
 	
+	<form th:action="@{/customer/book-search}" method="post">
+			<input type="text" placeholder="Buradan axtarmaq istədiyinizi yazın" name="searchText" />
+			<input type="submit" value="Axtar" />
+		</form>
 	
 	<div id="books">
 		<div class="book-card-container" th:each="book : ${books}">
@@ -147,7 +177,24 @@
 	</div>
 	
 	
-	
+	<div class="wrapper">
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-sm-12">
+       
+         
+        <ul id="pagination-demo" class="pagination-sm">
+        
+        
+
+</ul>
+      </div>
+    </div>
+
+    <div id="page-content" class="page-content"></div>
+  </div>
+</div>
 	
 </body>
 </html>
