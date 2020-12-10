@@ -2,7 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<title></title>
+<title>Müştəri</title>
+<meta charset="utf-8">
+
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
 	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
@@ -97,7 +99,7 @@
 }
 
 .book-desc::before {
-	content: "Təsvir : "
+	content: "TÉ™svir : "
 }
 
 .book-price {
@@ -105,7 +107,7 @@
 }
 
 .book-price::before {
-	content: "Qiymət : "
+	content: "QiymÉ™t : "
 }
 
 .add-to-basket {
@@ -153,7 +155,7 @@
 	<div th:replace="menu :: menu"></div>
 	
 	<form th:action="@{/customer/book-search}" method="post">
-			<input type="text" placeholder="Buradan axtarmaq istədiyinizi yazın" name="searchText" />
+			<input type="text" placeholder="Buradan axtarmaq istÉ™diyinizi yazÄ±n" name="searchText" />
 			<input type="submit" value="Axtar" />
 		</form>
 	
@@ -169,7 +171,7 @@
 			<span th:text="${book.name}" class="book-name"> </span> <span
 				th:text="${book.name}" class="book-desc"> </span> <span
 				th:text="${book.price}" class="book-price"> </span>
-			<button class="add-to-basket">Səbətə at</button>
+			<button class="add-to-basket">SÉ™bÉ™tÉ™ at</button>
 			</div>
 		</div>
 		

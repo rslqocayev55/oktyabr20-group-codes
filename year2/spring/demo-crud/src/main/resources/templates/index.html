@@ -108,9 +108,9 @@ h1{
 					<tr>
 						<th>Id</th>
 						<th>Ad</th>
-						<th>QiymÉ™t</th>
-						<th>ÅžÉ™kili</th>
-						<th>Æ�mÉ™liyyatlar</th>
+						<th>Qiymət</th>
+						<th>Şəkili</th>
+						<th>Əməliyyatlar</th>
 
 					</tr>
 				</thead>
@@ -122,7 +122,7 @@ h1{
 						<td><img style="max-width: 40px;" th:src="${user.imagePath}">
 						</td>
 						<td><a class="btn btn-primary"
-							th:href="@{/edit/{id}(id=${user.id})}">RedaktÉ™</a> <a
+							th:href="@{/edit/{id}(id=${user.id})}">Redaktə</a> <a
 							class="btn btn-danger" onclick="return confirm('eminsen?');"
 							th:href="@{/delete/{id}(id=${user.id})}">Sil</a></td>
 
