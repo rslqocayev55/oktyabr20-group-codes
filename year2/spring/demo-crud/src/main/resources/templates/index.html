@@ -3,6 +3,7 @@
 
 <head>
 <title>Kitablar</title>
+<meta charset="utf-8">
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
 	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
@@ -90,15 +91,15 @@ h1{
 
 		<div>
 			<h2>Kitablar</h2>
-			İstifadəçi adı :
+			Ä°stifadÉ™Ã§i adÄ± :
 			<p style="color: red; font-size: 24px;"
 				th:text="${@mySession.getUsername()}"></p>
 			<p>
-				<a href="/signup">Yeni kitab qeydiyyatı</a>
+				<a th:href="@{/signup}">Yeni kitab qeydiyyatÄ±</a>
 			</p>
 			
 			<form th:action="@{/book-search}" method="post">
-			<input type="text" placeholder="Buradan axtarmaq istədiyinizi yazın" name="searchText" />
+			<input type="text" placeholder="Buradan axtarmaq istÉ™diyinizi yazÄ±n" name="searchText" />
 			<input type="submit" value="Axtar" />
 		</form>
 		
@@ -107,9 +108,9 @@ h1{
 					<tr>
 						<th>Id</th>
 						<th>Ad</th>
-						<th>Qiymət</th>
-						<th>Şəkili</th>
-						<th>Əməliyyatlar</th>
+						<th>QiymÉ™t</th>
+						<th>ÅžÉ™kili</th>
+						<th>Æ�mÉ™liyyatlar</th>
 
 					</tr>
 				</thead>
@@ -121,7 +122,7 @@ h1{
 						<td><img style="max-width: 40px;" th:src="${user.imagePath}">
 						</td>
 						<td><a class="btn btn-primary"
-							th:href="@{/edit/{id}(id=${user.id})}">Redaktə</a> <a
+							th:href="@{/edit/{id}(id=${user.id})}">RedaktÉ™</a> <a
 							class="btn btn-danger" onclick="return confirm('eminsen?');"
 							th:href="@{/delete/{id}(id=${user.id})}">Sil</a></td>
 
