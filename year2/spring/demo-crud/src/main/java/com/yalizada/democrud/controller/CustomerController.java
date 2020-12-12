@@ -129,7 +129,13 @@ public class CustomerController {
 	
 	
 
+
 	
+	@GetMapping(path="/ajax-example")
+	public String showAjaxExamplePage( ) {
+	 
+		return "ajax-example";
+	}
 	 
 	
 	
