@@ -1,0 +1,198 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Kitablar</title>
+<meta charset="utf-8">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+	crossorigin="anonymous">
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"
+	integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+	crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+
+<script type="text/javascript" charset="utf8"
+	src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+	
+	
+ 
+	
+	
+	
+	
+		<script type="text/javascript" charset="utf8"
+	src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+	
+	
+	<script type="text/javascript" charset="utf8"
+	src="https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.1/jquery.twbsPagination.min.js"></script>
+	
+	
+	
+	
+<script>
+	$(document).ready(function() {
+		$('#myUsersTable').DataTable();
+		var totalBookCount = [[${totalBookCount}]];
+		
+		$('#pagination-demo').twbsPagination({
+	        totalPages: totalBookCount,
+	        visiblePages: 20,
+	        
+	        next: 'Next',
+	        prev: 'Prev',
+	        onPageClick: function (event, page) {
+	            //fetch content and render here
+	            $('#page-content').html('<a href="/book-pagination/'+page+'"> '+page+' </a>') + '';
+	        }
+	    });
+		
+	});
+	
+	
+	
+	
+</script>
+<style>
+.wrapper{
+  margin: 60px auto;
+  text-align: center;
+}
+h1{
+  margin-bottom: 1.25em;
+}
+#pagination-demo{
+  display: inline-block;
+  margin-bottom: 1.75em;
+}
+#pagination-demo li{
+  display: inline-block;
+}
+
+.page-content{
+  background: #eee;
+  display: inline-block;
+  padding: 10px;
+  width: 100%;
+  max-width: 660px;
+}
+
+</style>
+</head>
+
+<body>
+	<div th:replace="menu :: menu"></div>
+	<div>
+
+		<div>
+			<h2>Kitablar</h2>
+			<button type="button" onclick="loadBooks()">Kitablari yukle</button>
+			İstifadəçi adı :
+			<p style="color: red; font-size: 24px;"
+				th:text="${@mySession.getUsername()}"></p>
+			<p>
+				<a th:href="@{/signup}">Yeni kitab qeydiyyatı</a>
+			</p>
+			
+			<form th:action="@{/book-search}" method="post">
+			<input type="text" placeholder="Buradan axtarmaq istədiyinizi yazın" name="searchText" />
+			<input type="submit" value="Axtar" />
+		</form>
+		
+			<table id="myUsersTable" class="table">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Ad</th>
+						<th>Qiymət</th>
+						 
+
+					</tr>
+				</thead>
+				<tbody id="books-tbody">
+					 
+				</tbody>
+			</table>
+		</div>
+
+ 
+
+ 
+
+ <div class="wrapper">
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-sm-12">
+       
+         
+        <ul id="pagination-demo" class="pagination-sm">
+        
+        
+
+</ul>
+      </div>
+    </div>
+
+    <div id="page-content" class="page-content"></div>
+  </div>
+</div>
+
+
+
+		<form th:action="@{/logout}" method="post">
+			<input type="submit" value="Sign Out" />
+		</form>
+
+	</div>
+
+
+<script>
+function search(searchText) {
+	var xhttp = new XMLHttpRequest();
+	  xhttp.onreadystatechange = function() {
+	    if (this.readyState == 4 && this.status == 200) {
+	      myFunction(this);
+	    }
+	  };
+	  xhttp.open("GET", "/rest-books/search/"+searchText, true);
+	  xhttp.send();
+	  console.log('cavab geldi');
+}
+function loadBooks() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      myFunction(this);
+      $('#myUsersTable').DataTable();
+    }
+  };
+  xhttp.open("GET", "/rest-books", true);
+  xhttp.send();
+  console.log('cavab geldi');
+}
+function myFunction(xml) {
+  var i;
+  var xmlDoc = xml.responseXML;
+  var table="";
+  var x = xmlDoc.getElementsByTagName("item");
+  for (i = 0; i <x.length; i++) {
+    table += "<tr><td>" +
+    x[i].getElementsByTagName("id")[0].childNodes[0].nodeValue +
+    "</td><td>" +
+    x[i].getElementsByTagName("name")[0].childNodes[0].nodeValue +
+    "</td><td>" +
+    x[i].getElementsByTagName("price")[0].childNodes[0].nodeValue +
+    "</td></tr>";
+  }
+  document.getElementById("books-tbody").innerHTML = table;
+}
+</script>
+
+</body>
+</html>

@@ -90,6 +90,10 @@ public class BookController {
 		    m.addAttribute("users", addImagePath(bookDAO.findAllByUsernamePartial(this.username,begin,length)));
 		return "index";
 	} 
+	@GetMapping(path={"/rest-books-list"})
+	public String indexRestBooks() {
+		 return "book-list-rest";
+	} 
 	
 	
 	
