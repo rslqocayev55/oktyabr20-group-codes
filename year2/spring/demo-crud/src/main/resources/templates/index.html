@@ -91,15 +91,15 @@ h1{
 
 		<div>
 			<h2>Kitablar</h2>
-			Ä°stifadÉ™Ã§i adÄ± :
+			İstifadəçi adı :
 			<p style="color: red; font-size: 24px;"
 				th:text="${@mySession.getUsername()}"></p>
 			<p>
-				<a th:href="@{/signup}">Yeni kitab qeydiyyatÄ±</a>
+				<a th:href="@{/signup}">Yeni kitab qeydiyyatı</a>
 			</p>
 			
 			<form th:action="@{/book-search}" method="post">
-			<input type="text" placeholder="Buradan axtarmaq istÉ™diyinizi yazÄ±n" name="searchText" />
+			<input type="text" placeholder="Buradan axtarmaq istədiyinizi yazın" name="searchText" />
 			<input type="submit" value="Axtar" />
 		</form>
 		

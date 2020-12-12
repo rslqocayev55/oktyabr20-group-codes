@@ -99,7 +99,7 @@
 }
 
 .book-desc::before {
-	content: "TÉ™svir : "
+	content: "Təsvir : "
 }
 
 .book-price {
@@ -107,7 +107,7 @@
 }
 
 .book-price::before {
-	content: "QiymÉ™t : "
+	content: "Qiymət : "
 }
 
 .add-to-basket {
@@ -144,7 +144,10 @@
 	});
 	
 	
-	
+	function addToBasket(id){
+		console.log(id);
+		
+	}
 	
 </script>
 
@@ -155,7 +158,7 @@
 	<div th:replace="menu :: menu"></div>
 	
 	<form th:action="@{/customer/book-search}" method="post">
-			<input type="text" placeholder="Buradan axtarmaq istÉ™diyinizi yazÄ±n" name="searchText" />
+			<input type="text" placeholder="Buradan axtarmaq istədiyinizi yazın" name="searchText" />
 			<input type="submit" value="Axtar" />
 		</form>
 	
@@ -171,7 +174,7 @@
 			<span th:text="${book.name}" class="book-name"> </span> <span
 				th:text="${book.name}" class="book-desc"> </span> <span
 				th:text="${book.price}" class="book-price"> </span>
-			<button class="add-to-basket">SÉ™bÉ™tÉ™ at</button>
+			<button onclick="addToBasket(${book.id})" class="add-to-basket">Səbətə at</button>
 			</div>
 		</div>
 		

@@ -23,13 +23,13 @@
 
 			<div class="form-group">
 				<label for="name">Ad:</label> <input class="form-control"
-					type="text" th:field="*{name}" id="name" placeholder="Name">
+					type="text" th:field="*{name}" id="name" placeholder="Ad">
 				<span style="color: red;" th:if="${#fields.hasErrors('name')}"
 					th:errors="*{name}"></span>
 			</div>
 			<div class="form-group">
 				<label for="email">Qiymət:</label> <input class="form-control"
-					type="number" th:field="*{price}" id="price" placeholder="QiymÉ™t">
+					type="number" th:field="*{price}" id="price" placeholder="Qiymət">
 				<span style="color: red;" th:if="${#fields.hasErrors('price')}"
 					th:errors="*{price}"></span>
 			</div>
