@@ -14,11 +14,24 @@ th,td {
  
 <button type="button" onclick="loadBooks()">Kitablari yukle</button>
 <br><br>
+<input type="text" oninput="search(this.value)">
+<br><br>
 <table id="books">
 
 </table>
 
 <script>
+function search(searchText) {
+	var xhttp = new XMLHttpRequest();
+	  xhttp.onreadystatechange = function() {
+	    if (this.readyState == 4 && this.status == 200) {
+	      myFunction(this);
+	    }
+	  };
+	  xhttp.open("GET", "/rest-books/search/"+searchText, true);
+	  xhttp.send();
+	  console.log('cavab geldi');
+}
 function loadBooks() {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {

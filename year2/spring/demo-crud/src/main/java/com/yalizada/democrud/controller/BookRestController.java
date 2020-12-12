@@ -31,7 +31,7 @@ import com.yalizada.democrud.model.User;
 
 @RestController
 @RequestMapping(path="/rest-books")
-@CrossOrigin(origins="*")
+//@CrossOrigin(origins="*")
 public class BookRestController {
 	@Autowired
 	private StorageService storageService;
@@ -48,14 +48,15 @@ public class BookRestController {
 
 	@GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
 	public List<Book> findBooks(){
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		return this.bookDAO.findAllPartial(0, 100);
 	}
 	 
+	@GetMapping(path="/search/{search}",produces = MediaType.APPLICATION_XML_VALUE)
+	public List<Book> findBooksSearch(@PathVariable(name="search") String search){
+		
+		return this.bookDAO.findAllPartialSearch(0, 100, search);
+	}
+	
 	
 }
