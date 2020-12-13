@@ -157,32 +157,14 @@
 <body>
 	<div th:replace="menu :: menu"></div>
 	
-	<form th:action="@{/customer/book-search}" method="post">
-			<input type="text" placeholder="Buradan axtarmaq istədiyinizi yazın" name="searchText" />
-			<input type="submit" value="Axtar" />
-		</form>
+ 
+			<input oninput="search(this.value)" style="position: fixed; right: 10px;bottom: 50px;width: 200px" id="searchText" type="text" placeholder="Buradan axtarmaq istədiyinizi yazın" name="searchText" />
+			 <button id="basket-button" style="position: fixed; right: 10px;bottom: 10px;width: 200px"
+			  type="button" class="btn btn-primary" >Səbət(<span id="book-count">0</span>)</button>
+		 
 	
 	<div id="books">
-		<div class="book-card-container" th:each="book : ${books}">
-		<div class="book-card">
-			<div class="book-image-container"
-				style="width: 90%; margin: auto; height: 150px; margin-top: 20px; padding: 10px;">
-				<img style="max-width: 90%; max-height: 90%;" class="book-image"
-					th:src="${book.imagePath}">
-
-			</div>
-			<span th:text="${book.name}" class="book-name"> </span> 
-			<span
-				th:text="${book.name}" class="book-desc"> </span> 
-				
-				<span
-				th:text="${book.price}" class="book-price"> </span>
-				
-			<button onclick="addToBasket(${book.id})" class="add-to-basket">Səbətə at</button>
-			</div>
-		</div>
-		
-		
+		  
 	</div>
 	
 	
@@ -204,6 +186,70 @@
     <div id="page-content" class="page-content"></div>
   </div>
 </div>
+	
+	<script>
+	function myFunction(xml) {
+		
+		  var i;
+		  var xmlDoc = xml.responseXML; 
+		  var table="";
+		  var x = xmlDoc.getElementsByTagName("item");
+		  console.log(x.length);
+		  for (i = 0; i < x.length; i++) {
+			  table += "<div class='book-card-container'><div class='book-card'> "+
+			    "<div class='book-image-container' style='width: 90%; margin: auto; height: 150px;"+
+			    "margin-top: 20px; padding: 10px;'>"+
+				"<img style='max-width: 90%; max-height: 90%;' class='book-image' src='"+
+				 x[i].getElementsByTagName("imagePath")[0].innerHTML+"' ></div> " +
+				 "<span class='book-name'> "+ x[i].getElementsByTagName("name")[0].innerHTML+" </span> "
+				 +
+				 "<span class='book-desc'> "+ x[i].getElementsByTagName("name")[0].innerHTML+" </span> "
+				 +
+				 "<span class='book-price'> "+ x[i].getElementsByTagName("price")[0].innerHTML+" </span>"+
+				 
+				 "<button onclick='addToBasket("+x[i].getElementsByTagName("id")[0].innerHTML+")' class='add-to-basket'>Səbətə at</button></div></div>";
+				 
+			  
+		  }
+		  document.getElementById("books").innerHTML = table;
+		}
+
+		var xhttp = new XMLHttpRequest();
+		  xhttp.onreadystatechange = function() {
+		    if (this.readyState == 4 && this.status == 200) {
+		      myFunction(this);
+		    }
+		  };
+		  xhttp.open("GET", "/customer-rest/find-partial", true);
+		  xhttp.send();
+	
+	
+		  function search(searchText) {
+				var xhttp = new XMLHttpRequest();
+				  xhttp.onreadystatechange = function() {
+				    if (this.readyState == 4 && this.status == 200) {
+				      myFunction(this);
+				    }
+				  };
+				  xhttp.open("POST", "/rest-books/search-post", true);
+				  
+				  xhttp.setRequestHeader("Content-type", "application/xml");
+				   
+				  xhttp.send("<item> <search>"+searchText+"</search> </item>");
+				  console.log('cavab geldi');
+			}
+		  var basketBookCount=0;
+  function addToBasket(id) {
+	  
+	  document.getElementById("basket-button").style.display = 'none';
+	  setTimeout(() => {
+		  document.getElementById("basket-button").style.display = 'block';
+	}, 300);
+	  document.getElementById("book-count").innerHTML = ++basketBookCount;
+}
+
+</script>
+	
 	
 </body>
 </html>

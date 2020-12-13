@@ -137,6 +137,10 @@ public class CustomerController {
 		return "ajax-example";
 	}
 	 
-	
+	@GetMapping(path="/ajax")
+	public String showBooksAjax(  ) {
+		  
+		return "customer-ajax";
+	}
 	
 }

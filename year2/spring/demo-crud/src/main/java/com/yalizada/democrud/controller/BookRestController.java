@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,6 +29,7 @@ import com.yalizada.democrud.config.MySession;
 import com.yalizada.democrud.dao.BookDAO;
 import com.yalizada.democrud.file.StorageService;
 import com.yalizada.democrud.model.Book;
+import com.yalizada.democrud.model.SearchModel;
 import com.yalizada.democrud.model.User;
 
 @RestController
@@ -55,8 +58,25 @@ public class BookRestController {
 	@GetMapping(path="/search/{search}",produces = MediaType.APPLICATION_XML_VALUE)
 	public List<Book> findBooksSearch(@PathVariable(name="search") String search){
 		
-		return this.bookDAO.findAllPartialSearch(0, 100, search);
+		return addImagePath( this.bookDAO.findAllPartialSearch(0, 100, search));
 	}
 	
+	@PostMapping(path="/search-post",produces = MediaType.APPLICATION_XML_VALUE)
+	public List<Book> findBooksSearchPost(@RequestBody SearchModel searchModel){
+		
+		System.out.println(searchModel.getSearch());
+		
+		return addImagePath( this.bookDAO.findAllPartialSearch(0, 100, searchModel.getSearch()));
+	}
+	
+	
+	private List<Book> addImagePath(List<Book> users) {
+		String contextPath = servletContext.getContextPath();
+		System.out.println("contextPath : " + contextPath);
+		for (Book user : users) {
+			user.setImagePath(contextPath + "/files/" + user.getImagePath());
+		}
+		return users;
+	}
 	
 }
