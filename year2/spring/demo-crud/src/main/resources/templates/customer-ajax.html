@@ -159,7 +159,7 @@
 	
  
 			<input oninput="search(this.value)" style="position: fixed; right: 10px;bottom: 50px;width: 200px" id="searchText" type="text" placeholder="Buradan axtarmaq istədiyinizi yazın" name="searchText" />
-			 <button id="basket-button" style="position: fixed; right: 10px;bottom: 10px;width: 200px"
+			 <button onclick="openBasket()" id="basket-button" style="position: fixed; right: 10px;bottom: 10px;width: 200px"
 			  type="button" class="btn btn-primary" >Səbət(<span id="book-count">0</span>)</button>
 		 
 	
@@ -188,10 +188,12 @@
 </div>
 	
 	<script>
+	var allBooksArray;
 	function myFunction(xml) {
 		
 		  var i;
 		  var xmlDoc = xml.responseXML; 
+		  allBooksArray=xmlDoc;
 		  var table="";
 		  var x = xmlDoc.getElementsByTagName("item");
 		  console.log(x.length);
@@ -207,7 +209,9 @@
 				 +
 				 "<span class='book-price'> "+ x[i].getElementsByTagName("price")[0].innerHTML+" </span>"+
 				 
-				 "<button onclick='addToBasket("+x[i].getElementsByTagName("id")[0].innerHTML+")' class='add-to-basket'>Səbətə at</button></div></div>";
+				 "<button onclick='addToBasket("+x[i].getElementsByTagName("id")[0].innerHTML+",\""+
+				 x[i].getElementsByTagName("name")[0].innerHTML+"\","+
+				 x[i].getElementsByTagName("price")[0].innerHTML+")' class='add-to-basket'>Səbətə at</button></div></div>";
 				 
 			  
 		  }
@@ -239,15 +243,32 @@
 				  console.log('cavab geldi');
 			}
 		  var basketBookCount=0;
-  function addToBasket(id) {
-	  
-	  document.getElementById("basket-button").style.display = 'none';
-	  setTimeout(() => {
-		  document.getElementById("basket-button").style.display = 'block';
-	}, 300);
-	  document.getElementById("book-count").innerHTML = ++basketBookCount;
+		  var basketBooksIdList=[];
+  function addToBasket(id,name,price) {
+	  var thisBookAlreadyInBasket=false;
+	  var book={id:id,name:name,price:price};
+	  if(basketBooksIdList.includes(book)){
+		  alert('Bu artiq sebetde var');
+	  }else{
+		  
+		  basketBooksIdList.push(book);
+
+		  document.getElementById("basket-button").style.display = 'none';
+		  setTimeout(() => {
+			  document.getElementById("basket-button").style.display = 'block';
+		}, 300);
+		  document.getElementById("book-count").innerHTML = ++basketBookCount;
+	  }
+	   
 }
 
+  function openBasket(){
+	  var basketString=JSON.stringify(basketBooksIdList);
+	  
+	  localStorage.setItem('basket-items', basketString);
+	  window.location.href = '/basket';
+	  
+  }
 </script>
 	
 	
