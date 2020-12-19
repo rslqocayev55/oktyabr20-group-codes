@@ -48,10 +48,20 @@
 	 
 	 console.log(basketItemsArray);
 	 
+	 
+	function  onCountChange(count,id,price){
+		var totalPrice=count*price;
+		document.getElementById('id'+id).innerHTML=''+totalPrice;
+	}
+	 
+	 
+	 
 	 var tableBodyString="";
 	 for (var i = 0; i < basketItemsArray.length; i++) {
 		 var book=basketItemsArray[i];
-		 tableBodyString+="<tr> <td> "+book.id+" </td> <td>"+book.name+"</td><td>"+book.price+"</td><td></td><td></td> </tr> ";
+		 tableBodyString+="<tr> <td> "+book.id+" </td> <td>"+book.name+"</td><td>"+book.price+"</td><td><input oninput='onCountChange(this.value,"+book.id+","+book.price+")' type='number' value='1'>"+
+		 
+		 "</td><td> <span id='id"+book.id+"'>"+book.price+" </span> </td> </tr> ";
 	 }
 	 
 	 document.getElementById('basket-table-body').innerHTML=tableBodyString;
