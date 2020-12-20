@@ -244,10 +244,14 @@
 			}
 		  var basketBookCount=0;
 		  var basketBooksIdList=[];
+		  var bookIdForAddToBasket=0;
+		  
   function addToBasket(id,name,price) {
-	  var thisBookAlreadyInBasket=false;
+	  bookIdForAddToBasket=id;
+	  var thisBookAlreadyInBasket=basketBooksIdList.some(searchId);
 	  var book={id:id,name:name,price:price};
-	  if(basketBooksIdList.includes(book)){
+	  
+	  if(thisBookAlreadyInBasket){
 		  alert('Bu artiq sebetde var');
 	  }else{
 		  
@@ -261,6 +265,9 @@
 	  }
 	   
 }
+  function searchId(value){
+	  return value.id==bookIdForAddToBasket;
+  }
 
   function openBasket(){
 	  var basketString=JSON.stringify(basketBooksIdList);
