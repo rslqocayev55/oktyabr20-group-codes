@@ -211,7 +211,10 @@
 				 
 				 "<button onclick='addToBasket("+x[i].getElementsByTagName("id")[0].innerHTML+",\""+
 				 x[i].getElementsByTagName("name")[0].innerHTML+"\","+
-				 x[i].getElementsByTagName("price")[0].innerHTML+")' class='add-to-basket'>Səbətə at</button></div></div>";
+				 x[i].getElementsByTagName("price")[0].innerHTML+
+				 ",\""+
+				 x[i].getElementsByTagName("imagePath")[0].innerHTML+
+				 "\")' class='add-to-basket'>Səbətə at</button></div></div>";
 				 
 			  
 		  }
@@ -246,10 +249,10 @@
 		  var basketBooksIdList=[];
 		  var bookIdForAddToBasket=0;
 		  
-  function addToBasket(id,name,price) {
+  function addToBasket(id,name,price,image) {
 	  bookIdForAddToBasket=id;
 	  var thisBookAlreadyInBasket=basketBooksIdList.some(searchId);
-	  var book={id:id,name:name,price:price};
+	  var book={id:id,name:name,price:price,image:image};
 	  
 	  if(thisBookAlreadyInBasket){
 		  alert('Bu artiq sebetde var');
