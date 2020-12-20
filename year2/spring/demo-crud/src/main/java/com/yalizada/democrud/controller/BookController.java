@@ -50,7 +50,7 @@ public class BookController {
 	}
 	
 	
-	
+	// Model atributu controller terefinden yaddasa hansisa obyekti qoymaq ve bunu view terefde istifade etmek ucundur
 	@GetMapping("/createUserShowForm")
 	public String createUserShowForm( Model model) {
 		User user=new User();
@@ -58,6 +58,7 @@ public class BookController {
 	 model.addAttribute("user", user);
 		return "create-user-form";
 	}
+	
 	@GetMapping("/signup")
 	public String showSignUpForm(Model model) {
 		System.out.println("showSignUpForm");

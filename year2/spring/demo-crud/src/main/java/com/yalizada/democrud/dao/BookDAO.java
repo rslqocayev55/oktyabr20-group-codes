@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.yalizada.democrud.model.Book;
-
+// bu interface kitab obyektlerini bazada idare edir
 public interface BookDAO extends JpaRepository<Book, Integer> {
 	
 	

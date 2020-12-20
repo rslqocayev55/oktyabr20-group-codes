@@ -35,6 +35,8 @@ import com.yalizada.democrud.model.User;
 @RestController
 @RequestMapping(path="/rest-books")
 //@CrossOrigin(origins="*")
+
+// rest controller view-la bagli is gormur, bu yalniz gelen http isteklere cavab verir
 public class BookRestController {
 	@Autowired
 	private StorageService storageService;
@@ -49,6 +51,7 @@ public class BookRestController {
 	@Autowired
 	private ServletContext servletContext;
 
+	// bu metod kitab obyektlerini xml formatina cevirir ve istek gelen yere qaytarir
 	@GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
 	public List<Book> findBooks(){
 		

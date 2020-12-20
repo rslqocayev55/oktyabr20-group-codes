@@ -4,6 +4,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
+// bu sinif her login olan istifadeci ucun lazim olur,
+// spring her istifadeci ucun bu sinifden bir obyekt yaradir
 @Component
 @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS) 
 public class MySession {
