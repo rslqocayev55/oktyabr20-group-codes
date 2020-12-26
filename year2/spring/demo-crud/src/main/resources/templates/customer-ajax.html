@@ -246,7 +246,10 @@
 				  console.log('cavab geldi');
 			}
 		  var basketBookCount=0;
-		  var basketBooksIdList=[];
+		  var basketBooksIdListString=localStorage.getItem('basket-items');
+		  
+		  var basketBooksIdList=JSON.parse(basketBooksIdListString);
+		  document.getElementById("book-count").innerHTML = basketBooksIdList.length;
 		  var bookIdForAddToBasket=0;
 		  
   function addToBasket(id,name,price,image) {

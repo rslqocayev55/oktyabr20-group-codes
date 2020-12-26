@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.yalizada.democrud.file.StorageProperties;
 import com.yalizada.democrud.file.StorageService;
@@ -25,4 +26,12 @@ public class DemoCrudApplication {
 			storageService.init();
 		};
 	}
+	
+	
+//	@Bean
+//	public BCryptPasswordEncoder passwordEncoder (){
+//	return	new BCryptPasswordEncoder();
+//	}
+	
+	
 }
