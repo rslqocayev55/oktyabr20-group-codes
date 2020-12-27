@@ -56,6 +56,6 @@ public class CustomerRestController {
 	
 	@PostMapping
 	public void confirm(@RequestBody OrderModel orderModel){
-		System.out.println(orderModel.getName()+", "+orderModel.getSurname());
+		
 	}
 }
