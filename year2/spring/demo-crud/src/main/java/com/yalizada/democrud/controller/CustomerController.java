@@ -143,4 +143,15 @@ public class CustomerController {
 		return "customer-ajax";
 	}
 	
+	
+	@GetMapping(path="/confirmation-form")
+	public String confirmationForm(  ) {
+		  
+		return "confirmation-form";
+	}
+	
+	
+	
+	
+	
 }

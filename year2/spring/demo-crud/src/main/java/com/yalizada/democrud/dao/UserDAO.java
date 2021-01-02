@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.yalizada.democrud.model.User;
@@ -15,6 +17,9 @@ public class UserDAO {
 
 	@Autowired
 	private DataSource dataSource;
+	
+	 
+	private BCryptPasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
 	
 	
 	public boolean createUser(User user){
@@ -32,7 +37,7 @@ public class UserDAO {
 				 ps=conn.prepareStatement
 							("insert into users (username,password,enabled) values (?,?,?);");
 					ps.setString(1, user.getUsername());
-					ps.setString(2,  "{noop}"+user.getPassword());
+					ps.setString(2,  "{bcrypt}"+passwordEncoder.encode(user.getPassword()));
 					ps.setByte(3, (byte)1);
 					ps.executeUpdate();
 					

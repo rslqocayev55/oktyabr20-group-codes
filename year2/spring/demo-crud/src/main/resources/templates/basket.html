@@ -36,6 +36,10 @@
 <body>
 	 <div id="table-holder"></div>
 	 <span>Ümumi qiymət : </span><span id="totalPrice">  0</span>
+	 
+	 
+	 <button onclick="finish()">Alış verişi səstiqlə</button>
+	 
 	 <script type="text/javascript">
 	 
 	 
@@ -81,7 +85,7 @@
 		 for (var i = 0; i < bookCount; i++) {
 			 var book=basketItemsArray[i];
 			 tableBodyString+="<tr> <td> <img class='book-image' src='"+book.image+"'> </td> <td>"+book.name+"</td><td>"+book.price+
-			 "</td><td><input min='0' max='1000' oninput='onCountChange(this.value,"+book.id+","+book.price+
+			 "</td><td><input min='0' max='1000' onchange='updateLocalStorage()' oninput='onCountChange(this.value,"+book.id+","+book.price+
 					 ")' id='input"+book.id+"' type='number' value='1'>"+
 			 
 			 "</td><td> <span id='id"+book.id+"'>"+book.price+
@@ -107,8 +111,13 @@
 		 localStorage.setItem('basket-items',JSON.stringify(basketItemsArray));
 	 }
 	 
-	 
-	 
+	 function updateLocalStorage(){
+		 console.log('updateLocalStorage');
+		 localStorage.setItem('basket-items',JSON.stringify(basketItemsArray));
+	 }
+	 function finish() {
+		window.location.href='/customer/confirmation-form';
+	}
 	 </script>
 </body>
 </html>
